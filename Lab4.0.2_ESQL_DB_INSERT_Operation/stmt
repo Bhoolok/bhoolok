@@ -1,0 +1,10 @@
+the values of the 
+SQLSTATE<00000>,SQLNativeError<0>,SQLCODE<0>,SQLErrorText will have DEFAULT values.
+
+IF an EXCEPTION Occurs in the database, then those default VALUES CHANGE.
+
+SQLSTATE<42S02>,SQLNativeError<-204>,SQLCODE<-1>,
+SQLErrorText[[IBM][CLI Driver][DB2/NT64] SQL0204N  "BANDARU.EE" is an undefined name.
+
+
+This can be used to see if any Exception occurs after each Operation on the Database.

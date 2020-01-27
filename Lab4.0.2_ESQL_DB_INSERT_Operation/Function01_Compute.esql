@@ -1,0 +1,51 @@
+
+
+CREATE COMPUTE MODULE Function01_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		   CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+CREATE PROCEDURE CopyEntireMessage() BEGIN
+
+     DECLARE sqlstate01 CHARACTER;   
+     DECLARE sqlerrortext01 CHARACTER;   
+     DECLARE sqlcode01 INTEGER;   
+     DECLARE sqlnativeerror01 INTEGER;  
+  
+-- Make a database insert to a table that does not exist --
+INSERT INTO Database.system.EMPLOYEE(NO,NAME,CITY) VALUES (02,'Sharath','Chennai');
+                   
+
+--//Retrieve the database return codes// --
+SET sqlstate01 = SQLSTATE;
+SET sqlcode01 = SQLCODE;
+SET sqlerrortext01 = SQLERRORTEXT;
+SET sqlnativeerror01 = SQLNATIVEERROR;
+
+--//Use the THROW statement to back out the database and issue a user exception//--
+--THROW USER EXCEPTION MESSAGE 2950 VALUES
+--( 'The SQL State' , SQLState1 , SQLCode1 , SQLNativeError1 , 
+--SQLErrorText1 );
+
+
+SET OutputRoot.XMLNSC.ErrorLog.sqlstate01 = SQLSTATE;
+SET OutputRoot.XMLNSC.ErrorLog.sqlcode01  = SQLCODE;
+SET OutputRoot.XMLNSC.ErrorLog.sqlerrortext01 = SQLERRORTEXT;
+SET OutputRoot.XMLNSC.ErrorLog. sqlnativeerror01 = SQLNATIVEERROR;
+	END;
+END MODULE;
+
+
