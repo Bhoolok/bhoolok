@@ -5,8 +5,7 @@ CREATE COMPUTE MODULE InserQueryFlow_Compute
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		 CALL CopyEntireMessage();
-		 -- hello everyone 
-		 -- hellooo 
+		
 		RETURN TRUE;
 	END;
 
