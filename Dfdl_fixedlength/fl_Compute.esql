@@ -1,0 +1,28 @@
+
+
+CREATE COMPUTE MODULE fl_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		    CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot.XMLNSC.Response.Header.Name = InputRoot.DFDL.length.header.Name;
+		SET OutputRoot.XMLNSC.Response.Header.Company = InputRoot.DFDL.length.header.Company;
+		SET OutputRoot.XMLNSC.Response.Header.Address = InputRoot.DFDL.length.header.Address;
+		
+	DECLARE I INTEGER 1; 
+--		SET OutputRoot.XMLNSC.Response.Header.Name = InputRoot.DFDL.fixedlength1.
+		DECLARE ref REFERENCE TO InputRoot.DFDL.length.body[>]; 
+		WHILE LASTMOVE (ref) DO
+			SET OutputRoot.XMLNSC.Response.Body[I].NAME = ref.body_elem1;
+			SET OutputRoot.XMLNSC.Response.Body[I].COMPANY= ref.body_elem2;
+			SET OutputRoot.XMLNSC.Response.Body[I].ADDRESS = ref.body_elem3;
+			SET  I=I+1; 
+			MOVE ref NEXTSIBLING;
+		END WHILE;
+		END;		 
+		
+END MODULE;
